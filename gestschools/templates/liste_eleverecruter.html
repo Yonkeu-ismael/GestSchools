@@ -1,0 +1,86 @@
+
+{% extends "gestschools/menu.html" %}
+<h1>{% block title %}  Liste des élèves aux concours {% endblock %}</h1>
+
+{% block body-block %}
+
+<aside class="right-side">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <!--section starts-->
+        <h1>Tableau des Elèves recrutés</h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="{% url 'gestschools:menu' %}">
+                    <i class="livicon" data-name="home" data-size="14" data-loop="true"></i> Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="#">Concours</a>
+            </li>
+            <li class="active">Liste des Elèves recrutés</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-info filterable">
+                      <div class="pull-right">
+                            {% if perms.gestschools.add_eleverecruter %}
+                          <a class="glyphicon glyphicon-plus btn btn-primary btn-sm " type="button" style="margin-bottom:7px;" href="{% url 'gestschools:eleverecruter' %}">
+                              Ajouter recrutement
+                            </a>
+                            {% endif %} 
+                        </div>  
+                    <div class="panel-heading clearfix  ">
+                        <div class="panel-title pull-left">
+                            <div class="caption">
+                                <i class="livicon" data-name="camera" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i> TableTools
+                            </div>
+                        </div>
+                        <div class="tools pull-right"></div>
+                    </div>
+                    <div class="panel-body table-responsive">
+                        <table class="table table-striped table-bordered" id="table1">
+                            <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>ELEVE</th>
+                                  <th>NIVEAU</th>
+                                  <th>ANNEE SCOLAIRE</th>
+                                  <th>DATE DE RECRUTEMENT</th>
+                                  <th>DATE DE CONFIRMATION DU RECRUTEMENT</th>                                  
+                                </tr>
+                                  </thead>
+                                    <tbody>
+                                      {% for eleve in eleves %}
+                                          <tr>
+                                            <th>{{ forloop.counter }}
+                                                    {% if perms.gestschools.change_elevecon %}
+                                                    <a href="{% url 'gestschools:update_eleverecruter' pk=eleve.pk %}" class="glyphicon glyphicon-edit  btn btn-primary" ></a>
+                                                    {% endif %}
+                                                    {% if perms.gestschools.delete_elevecon %} 
+                                                    <a href="{% url 'gestschools:delete_eleverecruter' eleve.pk %}" class="glyphicon glyphicon-trash btn btn-danger"></a>
+                                                    {% endif %}
+                                                </th>
+                                            <td>{{ eleve.elevecon }}</td>
+                                            <td>{{ eleve.niveau }}</td>
+                                            <td>{{ eleve.anneescolaire }}</td>
+                                            <td>{{ eleve.datederecrute }}</td>
+                                            <td>{{ eleve.dateConfirmerecrute }}</td>
+                                           
+                                         </tr>
+                                      {% endfor %}
+                                    </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          </aside>
+{% endblock %}
+
+
+
+
+

@@ -1,0 +1,37 @@
+
+
+{% extends "gestschools/menu.html" %}
+{% load widget_tweaks %}
+
+{% block body-block %}
+
+<aside class="right-side">
+		<section class="content">
+			<!--main content-->
+			<div class="row">
+				<!--row starts-->
+				<div class="col-md-10">
+					<!--lg-6 starts-->
+					<!--basic form starts-->
+					<div class="panel panel-primary" id="hidepanel1">
+						<div class="panel-body">
+							<form method="post" action="">
+								<center><br><br><br><br><br><br>
+									<div class="row">
+											<h1><em> Enregistrement effectué avec succès!!!</em></h1>
+										</div>
+									</center>
+								<div class="modal-footer">
+									<a class="delete-btn btn btn-cancel" href="{% url 'gestschools:liste_service' %}">OK</a>
+								</div>
+                            </form>						
+                        </div>
+					</div>
+				</div>
+			</div>
+	</section>
+</aside>
+
+{% endblock %}
+
+

@@ -1,0 +1,87 @@
+{% extends "gestschools/menu.html" %}
+<h1>{% block title %}  Liste d'affectation des Matières aux enseignants{% endblock %}</h1>
+{% block body-block %}
+
+<aside class="right-side">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <!--section starts-->
+        <h1>Tableau des affectations</h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="{% url 'gestschools:menu' %}">
+                    <i class="livicon" data-name="home" data-size="14" data-loop="true"></i> Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="#">Professeurs</a>
+            </li>
+            <li class="active">Liste des affectations</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-info filterable">
+                    <div class="panel-heading clearfix  ">
+                        <div class="panel-title pull-left">
+                            <div class="caption">
+                                <i class="livicon" data-name="camera" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i> TableTools
+                            </div>
+                        </div>
+                        <div class="pull-right">
+                            {% if perms.gestschools.add_affectation %}
+                          <a class="glyphicon glyphicon-plus btn btn-primary btn-sm " type="button" style="margin-bottom:7px;" href="{% url 'gestschools:enseignant' %}">
+                                Ajouter affectation
+                              </a>
+                              {% endif %}
+                          </div>   
+                        <div class="tools pull-right">
+                            <a class="glyphicon glyphicon-print btn btn-primary btn-sm " type="button" style="margin-bottom:7px;" href="{% url 'gestschools:aff' %}">
+                                Imprimer
+                              </a>
+
+                        </div>
+                    </div>
+                    <div class="panel-body table-responsive">
+                        <table class="table table-striped table-bordered" id="table1">
+                          <thead>
+                            <tr>
+                              <th >#</th>
+                              <th >Enseignant</th>
+                              <th >Année scolaire</th>
+                              <th >Matière</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for affectation in affectations %}
+                            
+                              <tr>
+                                <th >{{ forloop.counter }}
+                                    {% if perms.gestschools.change_affectation %}
+                                    <a href="{% url 'gestschools:update_affectation' pk=affectation.pk %}" class="glyphicon glyphicon-edit  btn btn-primary" >
+                                      </a>
+                                      {% endif %}
+                                      {% if perms.gestschools.delete_affectation %}
+                                      <a href="{% url 'gestschools:delete_affectation' affectation.pk %}" class="glyphicon glyphicon-trash btn btn-danger"></a>
+                                      {% endif %}
+                                    </th>
+                                <td>{{ affectation.enseignant }}</td>
+                                <td>{{ affectation.anneescolaire }}</td>
+                                <td>{{ affectation.matiere }}</td>
+                              </tr>
+                              
+                            {% endfor %}
+                          </tbody>      
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          </aside>
+{% endblock %}
+
+
+
+
+

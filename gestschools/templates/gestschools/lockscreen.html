@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+
+<head>
+    <title>Lock Screen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- global level css -->
+    <link href="{% static 'gestschools2/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <!-- end of global level css -->
+    <!-- page level css -->
+    <link rel="stylesheet" href="{% static 'gestschools2/vendors/fort.js/css/fort.css' %}" />
+    <link href="{% static 'gestschools2/css/pages/lockscreen.css' %}" rel="stylesheet" />
+    <!-- end of page level css -->
+</head>
+
+<body>
+    <div class="top">
+        <div class="colors"></div>
+    </div>
+    <div class="container">
+        <div class="login-container">
+            <div>
+                    <img src="{% static 'gestschools2/img/user.png' %}" width="100" class=" " height="100" >
+
+            </div>
+            <div class="form-box">
+                <form method="POST" name="" >
+                        
+                    <div class="form">
+                        <p class="form-control-static"><b>{% firstof user.username %}</b></p>
+                        {% csrf_token %}
+                        {{ form.as_p}}
+                        <button class="btn btn-info btn-block login"  type="submit">GO</button>	
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- global js -->
+    <script src="{% static 'gestschools2/js/app.js' %}" type="text/javascript"></script>
+    <!-- end of global js -->
+    <!-- begining of page level js-->
+    <script src="{% static 'gestschools2/vendors/fort.js/js/fort.js' %}"></script>
+    <!-- end of page level js-->
+</body>
+
+</html>

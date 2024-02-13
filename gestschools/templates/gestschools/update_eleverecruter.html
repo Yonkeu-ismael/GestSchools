@@ -1,0 +1,79 @@
+{% extends "gestschools/menu.html" %}
+{% load widget_tweaks %}
+
+{% block body-block %}
+
+<aside class="right-side">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<!--section starts-->
+			<h1>Modification</h1>
+			<ol class="breadcrumb">
+				<li>
+					<a href="{% url 'gestschools:menu' %}">
+						<i class="livicon" data-name="home" data-size="14" data-loop="true"></i>
+						Dashboard
+					</a>
+				</li>
+				<li>
+					<a href="#">Concours</a>
+				</li>
+				<li class="active">Update recrutement</li>
+			</ol>
+		</section>
+		<!--section ends-->
+		<section class="content">
+			<!--main content-->
+			<div class="row">
+				<!--row starts-->
+				<div class="col-md-10">
+					<!--lg-6 starts-->
+					<!--basic form starts-->
+					<div class="panel panel-primary" id="hidepanel1">
+						<div class="panel-body">
+							<form class="form-horizontal"  method="POST">
+								<fieldset>
+										{% csrf_token %}									
+											<div class="modal-body">
+										
+												<div class="{% if form.non_field_errors %}invalid{% endif %} mb-2">
+													{% for error in form.non_field_errors %}
+														{{ error }}
+													{% endfor %}
+												</div>
+										
+												{% for field in form %}
+													<div class="form-group">
+														<label for="{{ field.id_for_label }}">{{ field.label }}</label>
+														{% render_field field class="form-control" placeholder=field.label %}
+														<div class="{% if field.errors %} invalid{% endif %}">
+															{% for error in field.errors %}
+																<p class="help-block">{{ error }}</p>
+															{% endfor %}
+														</div>
+													</div>
+												{% endfor %}
+											</div>
+											
+											<div class="modal-footer">
+												<button class="submit-btn btn btn-primary"  type="submit">Save</button>	
+												<a class="delete-btn btn btn-danger" href="{% url 'gestschools:delete_elevecon' eleve.id %}">Delete</a>
+											</div>
+									
+								</fieldset>
+							</form>
+						</div>
+					</div>
+					<!--basic form 2 starts-->
+				</div>
+				<!--md-6 ends-->
+				
+			
+			</div>
+			
+			</div>
+	</section>
+</aside>
+
+{% endblock %}
+

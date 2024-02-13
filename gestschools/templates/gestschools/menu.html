@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    
+    <title>{% block title %}Gestschool{% endblock %}</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+   
+    <!-- global css -->
+    <link href="{% static 'gestschools2/css/app.css' %}" rel="stylesheet" type="text/css" />
+    <!-- end of global css -->
+    <!--page level css -->
+    <link href="{% static 'gestschools2/vendors/fullcalendar/css/fullcalendar.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'gestschools2/css/pages/calendar_custom.css' %}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" media="all" href="{% static 'gestschools2/vendors/bower-jvectormap/css/jquery-jvectormap-1.2.2.css' %}" />
+    <link rel="stylesheet" href="{% static 'gestschools2/vendors/animate/animate.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'gestschools2/vendors/datetimepicker/css/bootstrap-datetimepicker.min.css' %}">
+    <link rel="stylesheet" href="{% static 'gestschools2/css/pages/only_dashboard.css' %}" />
+    
+
+    <!--tables -->
+    <!--page level css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'gestschools2/vendors/select2/css/select2.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'gestschools2/vendors/select2/css/select2-bootstrap.css' %}"/>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'gestschools2/vendors/datatables/css/dataTables.bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'gestschools2/vendors/datatables/css/buttons.bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'gestschools2/vendors/datatables/css/colReorder.bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'gestschools2/vendors/datatables/css/dataTables.bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'gestschools2/vendors/datatables/css/rowReorder.bootstrap.cs' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'gestschools2/vendors/datatables/css/buttons.bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'gestschools2/vendors/datatables/css/scroller.bootstrap.css' %}" />
+    <link href="{% static 'gestschools2/css/pages/tables.css' %}" rel="stylesheet" type="text/css">
+    
+    <link href="{% static 'gestschools2/css/pages/tables.css' %}" rel="stylesheet" type="text/css" />
+    
+    <link href="{% static 'gestschools2/vendors/jasny-bootstrap/css/jasny-bootstrap.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'gestschools2/vendors/x-editable/css/bootstrap-editable.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'gestschools2/css/pages/user_profile.css' %}" rel="stylesheet" type="text/css" />
+<style>
+td,th {
+text-align:center;
+}
+</style>
+    
+    <!--end of page level css-->
+    
+</head>
+
+<body class="skin-josh">
+    <header class="header">
+       <div>
+            <a href="" class="logo">
+                <img src= '{% static "gestschools2/img/logo/log3.PNG" %}' alt="logo">
+            </a> 
+              
+        </div>
+
+        <nav class="navbar navbar-static-top" role="navigation">
+                
+            <!-- Sidebar toggle button-->
+            <div>
+                <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <div class="responsive_nav"></div>
+                </a>
+            </div>
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                {% if user.is_authenticated %}
+                            <img src="{% static 'gestschools2/img/user.png' %}" width="35" class="img-circle img-responsive pull-left" height="35" alt="riot">
+                            <div class="riot">
+                                
+                                <div id="user-tools">
+                                    {% block welcome-msg %}
+                                        Welcome {{ date }}
+                                        <strong>
+                                          {% filter force_escape %}
+                                            {% firstof  user.username %}{% endfilter %}
+                                        </strong>
+                                      {% endblock %}
+                                      <span class="user-links"><i class="caret"></i></span>
+                                      
+                                </div>
+                            </div>
+                            {% endif %}
+                        </a>
+                        {% if user.is_authenticated %}                     
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header bg-light-blue">
+                                <img src="{% static 'gestschools2/img/user.png' %}" width="90" class="img-circle img-responsive" height="90" alt="User Image" />
+                                <p class="topprofiletext">
+                                            {% block msg %}
+                                                <strong>
+                                                  {% filter force_escape %}
+                                                    {% firstof user.username %}{% endfilter %}
+                                                </strong>
+                                              {% endblock %}
+                                              <span class="user-links"><i class="caret"></i></span>
+                                            
+                                </p>
+                            </li>
+                            <!-- Menu Body -->
+                            <li>
+                                <a href="{% url 'gestschools:user_view' %}">
+                                    <i class="livicon" data-name="user" data-s="18"></i> My Profile
+                                </a>
+                            </li>
+                            <li role="presentation"></li>
+                            <li>
+                                <a href="{% url 'password_change_form' %}">
+                                    <i class="livicon" data-name="gears" data-s="18"></i> Change password
+                                </a>
+                            </li>
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="">
+                                        <i class="livicon" data-name="lock" data-s="18"></i> Lock
+                                    </a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="{% url 'gestschools:logout' %}">
+                                        <i class="livicon" data-name="sign-out" data-s="18"></i> Log out
+                                    </a>
+                                </div>
+                            </li>
+                           
+                        </ul>
+                        {% endif %}
+                        <!-- <form class="form-inline my-2 my-lg-0">
+                                <a href="{% url 'gestschools:login' %}" class="btn btn-outline-secondary">Log in</a>
+                                <a href="{% url 'gestschools:signup' %}" class="btn btn-primary ml-2">Sign up</a>
+                        </form> -->
+                    
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    {% block content %}
+        <div class="wrapper row-offcanvas row-offcanvas-left">
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="left-side sidebar-offcanvas">
+            <section class="sidebar ">
+                <div class="page-sidebar  sidebar-nav">
+                    <div class="clearfix"></div>
+                    <!-- BEGIN SIDEBAR MENU -->
+                    <ul id="menu" class="page-sidebar-menu">
+                        <li class="active">
+                            <a href='{% url "gestschools:menu" %}'>
+                                <i class="livicon" data-name="dashboard" data-size="18" data-c="#418BCA" data-hc="#418BCA" data-loop="true"></i>
+                                <span class="title">Dashboard</span>
+                            </a>
+                        </li>
+                        {% if perms.gestschools %}
+                        <li>
+                            <a href="#">
+                                <i class="livicon" data-name="users" data-size="18" data-c="#00bc8c" data-hc="#00bc8c" data-loop="true"></i>
+                                <span class="title">Elèves</span>
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="#">
+                                        <span class="title">Inscription</span>
+                                        <span class="fa arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        {% if perms.gestschools.add_parents %}
+                                        <li>
+                                            <a href="{% url 'gestschools:parents' %}">
+                                            <i class="fa fa-angle-double-right"></i> Ajouter parent
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                        {% if perms.gestschools.add_eleve %}
+                                        <li>
+                                            <a href="{% url 'gestschools:menueleve' %}">
+                                                <i class="fa fa-angle-double-right"></i> Ajouter élève
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                        {% if perms.gestschools.add_affecter_classe %}
+                                        <li>
+                                            <a href="{% url 'gestschools:affecter_classe' %}">
+                                                <i class="fa fa-angle-double-right"></i> Affecter classe
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                        {% if perms.gestschools.view_eleve %}
+                                        <li>
+                                                <a href="{% url 'gestschools:liste_eleves' %}">
+                                                <i class="fa fa-angle-double-right"></i> Lister  élèves
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                        {% if perms.gestschools.view_affecter_classe %}
+                                        <li>
+                                            <a href="{% url 'gestschools:liste_affecterclasse' %}">
+                                                <i class="fa fa-angle-double-right"></i> Lister inscription
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="title">Préinscription</span>
+                                        <span class="fa arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        {% if perms.gestschools.add_preinscription %}
+                                        <li>
+                                            <a href="{% url 'gestschools:preinscription' %}">
+                                                <i class="fa fa-angle-double-right"></i> Ajouter 
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                        {% if perms.gestschools.view_prinscription %}
+                                        <li>
+                                            <a href="{% url 'gestschools:liste_preinscriptions' %}">
+                                                <i class="fa fa-angle-double-right"></i> Lister
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="title">Absence</span>
+                                        <span class="fa arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        {% if perms.gestschools.add_absence %}
+                                        <li>
+                                            <a href="{% url 'gestschools:absence' %}">
+                                                <i class="fa fa-angle-double-right"></i> Ajouter 
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                        {% if perms.gestschools.view_absence %}
+                                        <li>
+                                            <a href="{% url 'gestschools:liste_absences' %}">
+                                                <i class="fa fa-angle-double-right"></i> Lister
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        {% endif %}
+                        {% if perms.gestschools %}
+                        <li>
+                            <a href="#">
+                                <i class="livicon" data-name="user" data-c="#5bc0de" data-hc="#5bc0de" data-size="18" data-loop="true"></i>
+                                <span class="title">Enseignants</span>
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="#">
+                                        <span class="title">Statut enseignant</span>
+                                        <span class="fa arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        {% if perms.gestschools.add_statutenseignant %}
+                                        <li>
+                                            <a href="{% url 'gestschools:statutenseignant' %}">
+                                                <i class="fa fa-angle-double-right"></i> Ajouter
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="title">Type de contrat</span>
+                                        <span class="fa arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                            {% if perms.gestschools.add_type_contrat %}
+                                        <li>
+                                            <a href="{% url 'gestschools:type_contrat' %}">
+                                                <i class="fa fa-angle-double-right"></i> Ajouter
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="title">Enseignant</span>
+                                        <span class="fa arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                            {% if perms.gestschools.add_enseignant %}
+                                        <li>
+                                            <a href="{% url 'gestschools:enseignant' %}">
+                                                <i class="fa fa-angle-double-right"></i> Ajouter
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                        {% if perms.gestschools.view_enseignant %}
+                                        <li>
+                                            <a href="{% url 'gestschools:liste_enseignants' %}">
+                                                <i class="fa fa-angle-double-right"></i> Lister
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="title">Affectation</span>
+                                        <span class="fa arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                            {% if perms.gestschools.add_affectation %}
+                                        <li>
+                                            <a href="{% url 'gestschools:affectation' %}">
+                                                <i class="fa fa-angle-double-right"></i> Ajouter
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                        {% if perms.gestschools.view_affectation %}
+                                        <li>
+                                            <a href="{% url 'gestschools:liste_affectations' %}">
+                                                <i class="fa fa-angle-double-right"></i> Lister
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="title">Titulaire</span>
+                                        <span class="fa arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        {% if perms.gestschools.add_enseignant_titulaire %}
+                                        <li>
+                                            <a href="{% url 'gestschools:enseignant_titulaire' %}">
+                                                <i class="fa fa-angle-double-right"></i> Ajouter 
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                        {% if perms.gestschools.view_enseignant_titulaire %}
+                                        <li>
+                                            <a href="{% url 'gestschools:liste_titulaires' %}">
+                                                <i class="fa fa-angle-double-right"></i> Lister
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="title">Animateur pédagogique</span>
+                                        <span class="fa arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        {% if perms.gestschools.add_animateur_pedagogique %}
+                                        <li>
+                                            <a href="{% url 'gestschools:animateur_pedagogique' %}">
+                                                <i class="fa fa-angle-double-right"></i> Ajouter
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        {% endif %}
+                        {% if perms.gestschools.view_classe%}
+                        <li>
+                            <a href="#">
+                                <i class="livicon" data-name="home" data-c="#F89A14" data-hc="#F89A14" data-size="18" data-loop="true"></i>
+                                <span class="title">classe</span>
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="#">
+                                        <span class="title">Cycles </span>
+                                        <span class="fa arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        {% if perms.gestschools.add_cycle %}
+                                        <li>
+                                            <a href="{% url 'gestschools:cycle' %}">
+                                                <i class="fa fa-angle-double-right"></i> Ajouter
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="title">Niveaux </span>
+                                        <span class="fa arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        {% if perms.gestschools.add_niveau %}
+                                        <li>
+                                            <a href="{% url 'gestschools:niveau' %}">
+                                                <i class="fa fa-angle-double-right"></i> Ajouter
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                        {% if perms.gestschools.view_classe%}
+                                        <li>
+                                            <a href="{% url 'gestschools:liste_niveaux' %}">
+                                                <i class="fa fa-angle-double-right"></i> Lister
+                                            </a>
+                                        </li>
+                                        {% endif %}
+
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="title">Séries </span>
+                                        <span class="fa arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        {% if perms.gestschools.add_serie %}
+                                        <li>
+                                            <a href="{% url 'gestschools:serie' %}">
+                                                <i class="fa fa-angle-double-right"></i> Ajouter
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="title">Classe </span>
+                                        <span class="fa arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        {% if perms.gestschools.add_classe %}
+                                        <li>
+                                            <a href="{% url 'gestschools:classe' %}">
+                                                <i class="fa fa-angle-double-right"></i> Ajouter
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                        {% if perms.gestschools.view_classe%}
+                                        <li>
+                                            <a href="{% url 'gestschools:liste_classes' %}">
+                                                <i class="fa fa-angle-double-right"></i> Lister
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        {% endif %}
+                        {% if perms.gestschools %}
+                        <li>
+                            <a href="#">
+                                <i class="livicon" data-name="rocket" data-c="#F89A14" data-hc="#F89A14" data-size="18" data-loop="true"></i>
+                                <span class="title">Concours</span>
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="#">
+                                        <span class="title">Concours</span>
+                                        <span class="fa arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        {% if perms.gestschools.add_concours %}
+                                        <li>
+                                            <a href="{% url 'gestschools:concours' %}">
+                                                <i class="fa fa-angle-double-right"></i>Ajouter  
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                        {% if perms.gestschools.view_concours %}
+                                        <li>
+                                            <a href="{% url 'gestschools:liste_concours' %}">
+                                                <i class="fa fa-angle-double-right"></i> Lister
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="title">Inscription</span>
+                                        <span class="fa arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        {% if perms.gestschools.add_parents %}
+                                        <li>
+                                            <a href="{% url 'gestschools:parents' %}">
+                                            <i class="fa fa-angle-double-right"></i> Ajouter parent
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                        {% if perms.gestschools.add_eleveconcours %}
+                                        <li>
+                                            <a href="{% url 'gestschools:elevecon' %}">
+                                                <i class="fa fa-angle-double-right"></i> Ajouter élève
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                        {% if perms.gestschools.add_inscriptioncon %}
+                                        <li>
+                                            <a href="{% url 'gestschools:inscriptionCon' %}">
+                                                <i class="fa fa-angle-double-right"></i> Ajouter inscription 
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                        {% if perms.gestschools.view_elevecon %}
+                                        <li>
+                                            <a href="{% url 'gestschools:liste_elevecon' %}">
+                                                <i class="fa fa-angle-double-right"></i> Lister élèves 
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                        {% if perms.gestschools.view_inscriptioncon %}
+                                        <li>
+                                            <a href="{% url 'gestschools:liste_inscriptioncon' %}">
+                                                <i class="fa fa-angle-double-right"></i> Lister inscriptions
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="title">Matières</span>
+                                        <span class="fa arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        {% if perms.gestschools.add_matiereconcours %}
+                                        <li>
+                                            <a href="{% url 'gestschools:matiereconcours' %}">
+                                                <i class="fa fa-angle-double-right"></i> Ajouter
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                        {% if perms.gestschools.view_matiereconcours %}
+                                        <li>
+                                            <a href="{% url 'gestschools:liste_matiereconcours' %}">
+                                                <i class="fa fa-angle-double-right"></i> Lister
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="title">Recrutement</span>
+                                        <span class="fa arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        {% if perms.gestschools.add_eleverecruter %}
+                                        <li>
+                                            <a href="{% url 'gestschools:eleverecruter' %}">
+                                                <i class="fa fa-angle-double-right"></i> Ajouter 
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                        {% if perms.gestschools.view_eleverecruter %}
+                                        <li>
+                                            <a href="{% url 'gestschools:liste_eleverecruter' %}">
+                                                <i class="fa fa-angle-double-right"></i> Lister
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        {% endif %}
+                        {% if perms.gestschools.view_matiere %}
+                        <li>
+                            <a href="#">
+                                <i class="livicon" data-name="archive" data-c="#EF6F6C" data-hc="#EF6F6C" data-size="18" data-loop="true"></i>
+                                <span class="title">Matières</span>
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                {% if perms.gestschools.add_programme %}
+                                <li>
+                                    <a href="{% url 'gestschools:programme' %}">
+                                        <i class="fa fa-angle-double-right"></i> Ajouter programme
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if perms.gestschools.add_groupematiere %}
+                                <li>
+                                    <a href="{% url 'gestschools:groupematiere' %}">
+                                        <i class="fa fa-angle-double-right"></i> Ajouter groupe matière
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if perms.gestschools.add_matiere %}
+                                <li>
+                                    <a href="{% url 'gestschools:matiere' %}">
+                                        <i class="fa fa-angle-double-right"></i>Ajouter matière
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if perms.gestschools.add_discipline_competence %}
+                                <li>
+                                    <a href="{% url 'gestschools:discipline_competence' %}">
+                                        <i class="fa fa-angle-double-right"></i>  Ajouter discipline
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if perms.gestschools.view_matiere %}
+                                <li>
+                                    <a href="{% url 'gestschools:liste_matiere' %}">
+                                        <i class="fa fa-angle-double-right"></i> Liste matières
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if perms.gestschools.view_discipline_competence %}
+                                <li>
+                                    <a href="{% url 'gestschools:liste_disciplines' %}">
+                                        <i class="fa fa-angle-double-right"></i> Liste disciplines
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                        {% endif %}
+                        {% if perms.gestschools.view_evaluation %}
+                        <li>
+                            <a href="#">
+                                <i class="livicon" data-name="inbox " data-c="#418BCA" data-hc="#418BCA" data-size="18" data-loop="true"></i>
+                                <span class="title">Evaluation</span>
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                {% if perms.gestschools.add_evaluation %}
+                                <li>
+                                    <a href="{% url 'gestschools:evaluation' %}">
+                                        <i class="fa fa-angle-double-right"></i> Ajouter évaluation
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if perms.gestschools.add_evaluernote %}
+                                <li>
+                                    <a href="{% url 'gestschools:evaluernote' %}">
+                                        <i class="fa fa-angle-double-right"></i> Ajouter note
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if perms.gestschools.add_trimestre %}
+                                <li>
+                                    <a href="{% url 'gestschools:trimestre' %}">
+                                        <i class="fa fa-angle-double-right"></i>Ajouter Trimestre
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if perms.gestschools.add_sequence %}
+                                <li>
+                                    <a href="{% url 'gestschools:sequence' %}">
+                                        <i class="fa fa-angle-double-right"></i> Ajouter Séquence
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if perms.gestschools.add_periodeeval %}
+                                <li>
+                                    <a href="{% url 'gestschools:periodeeval' %}"> <i class="fa fa-angle-double-right"></i> Ajouter période </a>
+                                </li>
+                                {% endif %}
+                                <!-- <li>
+                                    <a href="{% url 'gestschools:moyennesequentiel' %}"> <i class="fa fa-angle-double-right"></i> Ajouter moyenne séquence</a>
+                                </li> -->
+                                {% if perms.gestschools.add_evaluernote %}
+                                <li>
+                                    <a href="{% url 'gestschools:liste_evaluernote' %}">
+                                        <i class="fa fa-angle-double-right"></i> Liste notes
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if perms.gestschools.view_evaluation %}
+                                <li>
+                                    <a href="{% url 'gestschools:liste_evaluations' %}"> <i class="fa fa-angle-double-right"></i> Liste évaluations </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                        {% endif %}
+                        {% if perms.gestschools %}
+                        <li>
+                            <a href="#">
+                                <i class="livicon" data-name="barchart" data-size="18" data-c="#00bc8c" data-hc="#00bc8c" data-loop="true"></i>
+                                <span class="title">Emploi du temps</span>
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                            {% if perms.gestschools.add_courslundi %}
+                                <li>
+                                    <a href="{% url 'gestschools:courslundi' %}">
+                                        <i class="fa fa-angle-double-right"></i> Ajouter Cours/jours
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if perms.gestschools.add_emploi_temps %}
+                                <li>
+                                    <a href="{% url 'gestschools:emploi_temps' %}">
+                                        <i class="fa fa-angle-double-right"></i> Ajouter emploi temps
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if perms.gestschools.view_emploi_temps %}
+                                <li>
+                                    <a href="{% url 'gestschools:liste_emploi_temps' %}">
+                                        <i class="fa fa-angle-double-right"></i> Liste emploi temps
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                        {% endif %}
+                        {% if perms.gestschools.view_administrateur %}
+                        <li>
+                                <a href="#">
+                                    <i class="livicon" data-name="user" data-size="18" data-c="#5bc0de" data-hc="#5bc0de" data-loop="true"></i>
+                                    <span class="title">Administration</span>
+                                    <span class="fa arrow"></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    {% if perms.gestschools.add_administrateur %}
+                                    <li>
+                                        <a href="{% url 'gestschools:admin' %}">
+                                            <i class="fa fa-angle-double-right"></i> Ajouter Admin
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                    {% if perms.gestschools.view_administrateur %}
+                                    <li>
+                                        <a href="{% url 'gestschools:liste_admin' %}">
+                                            <i class="fa fa-angle-double-right"></i> Liste admin
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                            </li> 
+                            {% endif %}
+                        {% if perms.gestschools.add_fraispayer %}
+                        <li>
+                            <a href="#">
+                                <i class="livicon" data-name="money" data-c="#418BCA" data-hc="#418BCA" data-size="18" data-loop="true"></i>
+                                <span class="title">gestion des frais</span>
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                {% if perms.gestschools.Ajouter_typefrais %}
+                                <li>
+                                    <a href="{% url 'gestschools:typefrais' %}">
+                                        <i class="fa fa-angle-double-right"></i> Ajouter Type frais
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if perms.gestschools.add_fraispayer %}
+                                <li>
+                                    <a href="{% url 'gestschools:fraispayer' %}">
+                                        <i class="fa fa-angle-double-right"></i> Ajouter frais payer
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                        {% endif %}
+                        {% if perms.gestschools.view_personnel %}
+                        <li>
+                            <a href="#">
+                                <i class="livicon" data-name="user" data-c="#F89A14" data-hc="#F89A14" data-size="18" data-loop="true"></i>
+                                <span class="title">Personnel</span>
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                {% if perms.gestschools.add_service %}
+                                <li>
+                                    <a href="{% url 'gestschools:service' %}">
+                                        <i class="fa fa-angle-double-right"></i>  Ajouter service
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if perms.gestschools.view_service %}
+                                <li>
+                                    <a href="{% url 'gestschools:liste_service' %}"> 
+                                        <i class="fa fa-angle-double-right"></i> Liste services
+                                    </a>
+                                </li> 
+                                {% endif %} 
+                                {% if perms.gestschools.add_personnel %}                             
+                                <li>
+                                    <a href="{% url 'gestschools:personnel' %}"> 
+                                        <i class="fa fa-angle-double-right"></i> Ajouter personnel
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if perms.gestschools.view_personnel %}
+                                <li>
+                                    <a href="{% url 'gestschools:liste_personnel' %}"> <i class="fa fa-angle-double-right"></i> Liste du personnel </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                        {% endif %}
+                        {% if perms.gestschools.view_programme_trans %}
+                        <li>
+                            <a href="#">
+                                <i class="livicon" data-name="truck" data-c="#EF6F6C" data-hc="#EF6F6C" data-size="18" data-loop="true"></i>
+                                <span class="title">Transport</span>
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                {% if perms.gestschools.add_bus %}
+                                <li>
+                                    <a href="{% url 'gestschools:bus' %}">
+                                        <i class="fa fa-angle-double-right"></i> Ajouter Bus
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if perms.gestschools.add_zone %}
+                                <li>
+                                    <a href="{% url 'gestschools:zone' %}">
+                                        <i class="fa fa-angle-double-right"></i> Ajouter Zone
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if perms.gestschools.add_programme_trans %}
+                                <li>
+                                    <a href="{% url 'gestschools:programme_trans' %}">
+                                        <i class="fa fa-angle-double-right"></i> Programmer un Transport
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if perms.gestschools.view_programme_trans %}
+                                <li>
+                                    <a href="{% url 'gestschools:liste_programme' %}">
+                                        <i class="fa fa-angle-double-right"></i> Liste programme 
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                        {% endif %}
+                        <li>
+                            <a href="#">
+                                <i class="livicon" data-name="book" data-c="#EF6F6C" data-hc="#EF6F6C" data-size="18" data-loop="true"></i>
+                                <span class="title">Documents</span>
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="{% url 'gestschools:certificat' %}">
+                                        <i class="fa fa-angle-double-right"></i> Créer un certificat de scolarité
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'gestschools:liste_certificat' %}">
+                                        <i class="fa fa-angle-double-right"></i> Liste des certificats
+                                    </a>
+                                </li>
+    
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="livicon" data-name="book" data-c="#EF6F6C" data-hc="#EF6F6C" data-size="18" data-loop="true"></i>
+                                <span class="title">Conseil Discipline</span>
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="{% url 'gestschools:conseildiscipline' %}">
+                                        <i class="fa fa-angle-double-right"></i> Ajouter conseil
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'gestschools:decisionconseil' %}">
+                                        <i class="fa fa-angle-double-right"></i>Ajouter décision 
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'gestschools:decisionfinalconseil' %}">
+                                        <i class="fa fa-angle-double-right"></i>Ajouter décision final  
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        {% if perms.gestschools.add_etablissement %}                       
+                        <li>
+                        <a href="#">
+                            <i class="livicon" data-name="gears" data-size="18" data-c="#5bc0de" data-hc="#5bc0de" data-loop="true"></i>
+                            <span class="title">Paramettrage</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="sub-menu">
+                                <li>
+                                    <a href="{% url 'gestschools:qualification' %}">
+                                        <i class="fa fa-angle-double-right"></i> Ajouter qualification
+                                    </a>
+                                </li>
+                                <li>
+                                <a href="{% url 'gestschools:anneescolaire' %}">
+                                    <i class="fa fa-angle-double-right"></i> Ajouter année scolaire
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'gestschools:pays' %}">
+                                    <i class="fa fa-angle-double-right"></i> Ajouter pays
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'gestschools:region' %}">
+                                    <i class="fa fa-angle-double-right"></i> Ajouter Région
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'gestschools:departement' %}">
+                                    <i class="fa fa-angle-double-right"></i> Ajouter Département
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'gestschools:arrondissement' %}">
+                                    <i class="fa fa-angle-double-right"></i> Ajouter Arrondissement
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'gestschools:ville' %}">
+                                    <i class="fa fa-angle-double-right"></i> Ajouter Ville
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'gestschools:etablissement' %}">
+                                    <i class="fa fa-angle-double-right"></i> Ajouter Etablissement
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'gestschools:ancienetablissement' %}">
+                                    <i class="fa fa-angle-double-right"></i> Ajouter Ancien Etablissement
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'gestschools:liste_etablissement' %}">
+                                    <i class="fa fa-angle-double-right"></i> Liste Etablissement
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    {% endif %}
+                </ul>
+                    <!-- END SIDEBAR MENU -->
+                </div>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- Right side column. Contains the navbar and content of the page -->
+        {% block body-block %}
+        <aside class="right-side">
+            <div class="alert alert-success alert-dismissable margin5">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <strong>Succès:</strong> vous vous êtes connecté avec succès!!!
+            </div>
+            <!-- Main content -->
+            <section class="content-header">
+                <h1>Bienvenue dans le système <strong>GESTSCHOOL V1.0</strong> </h1>
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <a href="#">
+                            <i class="livicon" data-name="home" data-size="14" data-color="#333" data-hovercolor="#333"></i> Dashboard
+                        </a>
+                    </li>
+                </ol>
+            </section>
+            <section class="content">
+                <div class="col-lg-12 margin_10 animated fadeInRightBig">
+                        <div class="row">
+                                <div class="col-lg-12 col-md-6 col-sm-6">
+                                    <div class="panel panel-success panel-border">
+                                        <div class="panel-heading  border-light">
+                                            <h4 class="panel-title">
+                                                <i class="livicon" data-name="calendar" data-size="16" data-loop="true" data-c="#fff" data-hc="#fff"></i> Calendar
+                                            </h4>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div id='external-events'></div>
+                                            <div id="calendar"></div>
+                                            <div class="box-footer pad-5">
+                                            </div>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                            <h4 class="modal-title" id="myModalLabel">
+                                                                <i class="fa fa-plus" style="margin-top: 8px;"></i> Create Event
+                                                            </h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="input-group">
+                                                                <input type="text" id="new-event" class="form-control" placeholder="Event">
+                                                            
+                                                            </div>
+                                                            <!-- /input-group -->
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-danger pull-right" data-dismiss="modal">
+                                                                Close
+                                                                <i class="fa fa-times" style="margin-top: 4px;"></i>
+                                                            </button>
+                                                            <button type="button" class="btn btn-success pull-left" id="add-new-event" data-dismiss="modal">
+                                                                <i class="fa fa-plus" style="margin-top: 5px;"></i> Ajouter
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </aside>
+        {% endblock %}
+        {% endblock %}
+        {% block footer %} 
+        {{get.time}}
+        <!-- footer -->
+        {% endblock %}
+        <!-- right-side -->
+    </div>
+    <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Return to top" data-toggle="tooltip" data-placement="left">
+        <i class="livicon" data-name="plane-up" data-size="18" data-loop="true" data-c="#fff" data-hc="white"></i>
+    </a>
+    <!-- global js -->
+    <script src="{% static 'gestschools2/js/app.js' %}" type="text/javascript"></script>
+    <!-- end of global js -->
+    <!-- begining of page level js -->
+    <!-- EASY PIE CHART JS -->
+    <script src="{% static 'gestschools2/vendors/jquery.easy-pie-chart/js/easypiechart.min.j' %}"></script>
+    <script src="{% static 'gestschools2/vendors/jquery.easy-pie-chart/js/jquery.easypiechart.min.js' %}"></script>
+    <script src="{% static 'gestschools2/js/jquery.easingpie.j' %}s"></script>
+    <!--end easy pie chart -->
+    <!--for calendar-->
+    <script src="{% static 'gestschools2/vendors/moment/js/moment.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'gestschools2/vendors/fullcalendar/js/fullcalendar.min.js' %}" type="text/javascript"></script>
+    <!--   Realtime Server Load  -->
+    <script src="{% static 'gestschools2/vendors/flotchart/js/jquery.flot.js' %}" type="text/javascript"></script>
+    <script src="{% static 'gestschools2/vendors/flotchart/js/jquery.flot.resize.js' %}" type="text/javascript"></script>
+    <!--Sparkline Chart-->
+    <script src="{% static 'gestschools2/vendors/sparklinecharts/jquery.sparkline.js' %}"></script>
+    <!-- Back to Top-->
+    <script type="text/javascript" src="{% static 'gestschools2/vendors/countUp.js/js/countUp.js' %}"></script>
+    <!--   maps -->
+    <script src="{% static 'gestschools2/vendors/bower-jvectormap/js/jquery-jvectormap-1.2.2.min.js' %}"></script>
+    <script src="{% static 'gestschools2/vendors/bower-jvectormap/js/jquery-jvectormap-world-mill-en.js' %}"></script>
+    <script src="{% static 'gestschools2/vendors/chartjs/Chart.js' %}"></script>
+    <script type="text/javascript" src="{% static 'gestschools2/vendors/datetimepicker/js/bootstrap-datetimepicker.min.js' %}"></script>
+    <!--  todolist-->
+    <script src="{% static 'gestschools2/js/pages/todolist.js' %}"></script>
+    <script src="{% static 'gestschools2/js/pages/dashboard.js' %}" type="text/javascript"></script>
+    <!-- end of page level js -->
+
+
+
+    <script type="text/javascript" src="{% static 'gestschools2/vendors/datatables/js/jquery.dataTables.js' %}"></script>
+    <script type="text/javascript" src="{% static 'gestschools2/vendors/jeditable/js/jquery.jeditable.js' %}"></script>
+    <script type="text/javascript" src="{% static 'gestschools2/vendors/datatables/js/dataTables.bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'gestschools2/vendors/datatables/js/dataTables.buttons.js' %}"></script>
+    <script type="text/javascript" src="{% static 'gestschools2/vendors/datatables/js/dataTables.colReorder.js' %}"></script>
+    <script type="text/javascript" src="{% static 'gestschools2/vendors/datatables/js/dataTables.responsive.js' %}"></script>
+    <script type="text/javascript" src="{% static 'gestschools2/vendors/datatables/js/dataTables.rowReorder.js' %}"></script>
+    <script type="text/javascript" src="{% static 'gestschools2/vendors/datatables/js/buttons.colVis.js' %}"></script>
+    <script type="text/javascript" src="{% static 'gestschools2/vendors/datatables/js/buttons.html5.js' %}"></script>
+    <script type="text/javascript" src="{% static 'gestschools2/vendors/datatables/js/buttons.print.js' %}"></script>
+    <script type="text/javascript" src="{% static 'gestschools2/vendors/datatables/js/buttons.bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'gestschools2/vendors/datatables/js/pdfmake.js' %}"></script>
+    <script type="text/javascript" src="{% static 'gestschools2/vendors/datatables/js/vfs_fonts.js' %}"></script>
+    <script type="text/javascript" src="{% static 'gestschools2/vendors/datatables/js/dataTables.scroller.js' %}"></script>
+    <script type="text/javascript" src="{% static 'gestschools2/js/pages/table-advanced.js' %}"></script>
+    
+    <script type="text/javascript" src="{% static 'gestschools2/js/pages/table-editable.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'gestschools2/vendors/select2/js/select2.js' %}"></script>
+    
+    <script src="{% static 'gestschools2/js/pages/user_profile.js' %}" type="text/javascript"></script>
+    <script src="{% static 'gestschools2/vendors/jasny-bootstrap/js/jasny-bootstrap.js' %}" type="text/javascript"></script>
+    <script src="{% static 'gestschools2/vendors/jquery-mockjax/js/jquery.mockjax.js' %}" type="text/javascript"></script>
+    <script src="{% static 'gestschools2/vendors/x-editable/js/bootstrap-editable.js' %}" type="text/javascript"></script>
+</body>
+
+</html>

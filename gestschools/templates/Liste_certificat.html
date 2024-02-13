@@ -1,0 +1,87 @@
+
+{% extends "gestschools/menu.html" %}
+<h1>{% block title %}  Liste des services de l'établissement {% endblock %}</h1>
+
+{% block body-block %}
+
+<aside class="right-side">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <!--section starts-->
+        <h1>Tableau des certificats de scolarité</h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="{% url 'gestschools:menu' %}">
+                    <i class="livicon" data-name="home" data-size="14" data-loop="true"></i> Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="#">Documents</a>
+            </li>
+            <li class="active">Liste des certificats de scolarité</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-info filterable">
+                    <div class="pull-right">
+                       
+                        {% if perms.gestschools.add_certificatsco%}<a class="glyphicon glyphicon-plus btn btn-primary btn-sm " type="button" style="margin-bottom:7px;" href="{% url 'gestschools:certificat' %}">
+                            Ajouter certificat
+                          </a>
+                          {% endif %}
+                      </div>  
+                    <div class="panel-heading clearfix  ">
+                       
+                        <div class="panel-title pull-left">
+                            <div class="caption">
+                                <i class="livicon" data-name="camera" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i> TableTools
+                            </div>
+                        </div>
+                        <div class="tools pull-right"></div>
+                    </div>
+                    <div class="panel-body table-responsive">
+                        <table class="table table-striped table-bordered" id="table1">
+                            <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>NOM ET PRENOM</th>
+                                  <th>DATE DE NAISSANCE</th>
+                                  <th>CLASSE</th>
+                                  <th>SERIE</th>
+                                  <th>ANNEE SCOLAIRE</th>
+                                  <th>ACTIONS</th>
+                                </tr>
+                                  </thead>
+                                    <tbody>
+                                      {% for certificat in certificats %}
+                                          <tr>
+                                            <th>{{ forloop.counter }}
+                                                </th>
+                                            <td>{{certificat.eleve.civilite}}{{certificat.eleve}}</td>
+                                            <td>{{certificat.eleve.datenaissel}}</td>
+                                            <td>{{certificat.classe}}</td>
+                                            <td>{{certificat.classe.serie}}</td>
+                                            <td>{{certificat.anneescolaire}}</td>
+                                            <td>
+                                                <a href="{% url 'gestschools:update_certificat' pk=certificat.pk %}" class="glyphicon glyphicon-edit  btn btn-primary pull-left" ></a>
+                                            {% if perms.gestschools.delete_certificat %}
+                                                <a href="{% url 'gestschools:delete_certificat' certificat.pk %}" class="glyphicon glyphicon-trash btn btn-danger pull-left"></a>
+                                            {% endif %}
+                                                <a href="{% url 'gestschools:certificatPDF' pk=certificat.pk %}" class="glyphicon glyphicon-print btn btn-success pull-left "></a>
+                                            </td>
+                                          </tr>
+                                      {% endfor %}
+                                    </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          </aside>
+{% endblock %}
+
+
+
+

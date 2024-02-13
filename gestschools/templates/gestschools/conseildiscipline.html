@@ -1,0 +1,118 @@
+{% extends "gestschools/menu.html" %}
+{% load widget_tweaks %}
+
+{% block body-block %}
+
+<aside class="right-side">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<!--section starts-->
+			<h1>Ajout d'un conseil de discipline</h1>
+			<ol class="breadcrumb">
+				<li>
+					<a href="{% url 'gestschools:menu' %}">
+						<i class="livicon" data-name="home" data-size="14" data-loop="true"></i>
+						Dashboard
+					</a>
+				</li>
+				<li>
+					<a href="#">Conseil discipline</a>
+				</li>
+				<li class="active">Ajouter conseil</li>
+			</ol>
+		</section>
+		<!--section ends-->
+		<section class="content">
+			<!--main content-->
+			<div class="row">
+				<!--row starts-->
+				<div class="col-md-10">
+					<!--lg-6 starts-->
+					<!--basic form starts-->
+					<div class="panel panel-primary" id="hidepanel1">
+						<div class="panel-body">
+							<form class="form-horizontal" action="#" method="post">
+                                    {% comment %}
+                                      
+                                    
+                                <center>
+                                        <a class="glyphicon glyphicon-eye-open btn btn-primary  " type="button" style="margin-bottom:7px;" href="{% url 'gestschools:liste_conseildiscipline' %}">
+                                                View list
+                                        </a>
+                                    </center>
+                                    {% endcomment %}
+								<fieldset>
+										{% csrf_token %}									
+											<div class="modal-body">
+										
+												<div class="{% if form.non_field_errors %}invalid{% endif %} mb-2">
+													{% for error in form.non_field_errors %}
+														{{ error }}
+													{% endfor %}
+												</div>
+										
+												{% for field in form %}
+													<div class="form-group">
+														<label for="{{ field.id_for_label }}">{{ field.label }}</label>
+														{% render_field field class="form-control" placeholder=field.label %}
+														<div class="{% if field.errors %} invalid{% endif %}">
+															{% for error in field.errors %}
+																<p class="help-block">{{ error }}</p>
+															{% endfor %}
+														</div>
+													</div>
+												{% endfor %}
+											</div>
+										
+											<div class="modal-footer">											
+													<div class="panel-body">
+														<div class="box-footer pad-5">
+															<button type="submit" value="submit" class="glyphicon glyphicon-floppy-saved submit-btn btn btn-success " data-toggle="modal" data-target="#myModal" ><b> Submit</b>  </button>
+															<button type="reset" class="glyphicon glyphicon-repeat btn btn-cancel pull-right" data-toggle="modal" data-target="#myModal" ><b>  Reset</b></button>
+														</div>
+														<!-- Modal -->
+														<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+																		<h4 class="modal-title" id="myModalLabel">
+																			<i class="" style="margin-top: 8px;"></i>
+																		</h4>
+																	</div>
+																	<div class="modal-body">
+																		<div class="input-group">
+																		Opération effectué avec succès!!!
+																		</div>
+																		<!-- /input-group -->
+																	</div>
+																	<div class="modal-footer">
+																		<!-- <button type="submit" class="delete-btn btn btn-danger">Delete</button> -->
+																		<button type="button" class="btn btn-success " data-dismiss="modal">
+																			OK
+																			
+																		</button>
+			
+																  </div>
+																</div>
+															</div>
+														</div>
+												</div>
+											</div>
+										
+								</fieldset>
+							</form>
+						</div>
+					</div>
+					<!--basic form 2 starts-->
+				</div>
+				<!--md-6 ends-->
+				
+			
+			</div>
+			
+			</div>
+	</section>
+</aside>
+
+{% endblock %}

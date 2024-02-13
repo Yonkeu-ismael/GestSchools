@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <title>eleve</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- global level css -->
+        <link href= "{% static 'gestschools/css/bootstrap.min.css' %}"  rel="stylesheet" />
+        <!-- end of global level css -->
+        <link href='{% static "gestschools/vendors/iCheck/css/square/blue.css" %}' rel="stylesheet" type="text/css" />
+        <link href='{% static "gestschools/vendors/bootstrapvalidator/css/bootstrapValidator.min.css" %}' rel="stylesheet" />
+        <!-- page level css -->
+        
+<body>
+    
+    <div id="register" class="animate form"></div>
+        <form action="index.html" id="register_here" autocomplete="on" method="post">
+            <h3 class="black_bg">
+                <img src="{% static 'gestschools/img/siges.png' %}" alt="logo">
+                <br>  </h3>
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.as_p}}
+        
+                <div class="col-sm-6 col-sm-offset-3  col-md-5 col-md-offset-4 col-lg-4 col-lg-offset-4">                                  
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+            
+            <!--<input type="submit" value="soumettre">-->
+        </form>
+     </div>
+      <!-- global js -->
+    <script src="{% static 'gestschools/js/app.js' %}" type="text/javascript"></script>
+    <!-- end of global js -->
+    <script src="{% static 'gestschools/vendors/bootstrapvalidator/js/bootstrapValidator.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'gestschools/vendors/iCheck/js/icheck.js' %}" type="text/javascript"></script>
+    <script src="{% static 'gestschools/js/pages/login.js' %}" type="text/javascript"></script>
+</body>
+</html>
+
+

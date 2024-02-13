@@ -1,0 +1,226 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>Title1</title>
+        <style type="text/css">
+            body {
+                font-weight: 200;
+                font-size: 14px;
+            }
+            .header {
+                font-size: 20px;
+                font-weight: 100;
+                text-align: center;
+                color: #007cae;
+            }
+            .title {
+                font-size: 13px;
+                font-weight: 100;
+               /* text-align: right;*/
+               padding: 10px 20px 0px 20px;  
+            }
+            .title span {
+                color: #000;
+            }
+            .details {
+                padding: 5px 10px 0px 10px;
+               
+                font-size: 13px;
+                /*margin-left: 40%;*/
+            }
+            .hrItem {
+                border: none;
+                height: 1px;
+                /* Set the hr color */
+                color: #333; /* old IE */
+                background-color: #fff; /* Modern Browsers */
+            }
+            .p1 {
+                text-align: center !important;
+                font-size: 9px;
+            }
+        
+            .p2 {
+                text-align: center !important;
+                font-size: 16px;
+            }
+            .p0 {
+                text-align: center ;
+                font-size: 13px;
+            }
+            .p3 {
+                text-align: left !important;
+                font-size: 9px;
+            }
+            .p4 {
+                text-align: center !important;
+                font-size: 10px;
+            }
+            .table{
+                font-size: 9px;
+                border: 1px solid rgb(122, 121, 121);
+            }
+            .tr{
+                background-color:silver;
+            }
+           
+            
+
+        </style>
+    </head>
+    <body>
+            
+        <tfoot>
+                <table> 
+                        {% for i in e %} 
+                    <TR>
+                        <td colspan="2" class="p1">
+                        REPUBLIQUE DU CAMEROUN <br/>
+                        Paix-Travail-Patrie<br/>
+                        MINISTAIRE DES ENSEIGNEMENTS SECONDAIRES<br/>
+                        DELEGATION REGIONALE DE L'OUEST<br/>
+                        DELEGATION DEPARTEMENTALE DU KOUNG-KHI<br/>
+                        {{i.libelleetablng1}}<br/>
+                        B.P: {{i.bp}} Tel: {{i.tel}}<br/>
+                        Site Web:{{i.site}}<br/>
+                        Email: {{i.email}}
+                        </td>
+                        <td class="p1">
+                            
+                        </td> 
+                        <td colspan="2" class="p1">
+                            REPUBLIC OF CAMEROON <br/>
+                            Peace-Work-Fatherland<br/>
+                            MINISTRY OF SECONDARY EDUCATION<br/>
+                            WEST REGIONAL DELEGATION<br/>
+                            DIVISIONAL DELEGATION FOR THE KOUNG-KHI<br/>
+                            {{i.libelleetablng2}}<br/>
+                            PO.BOX: {{i.bp}} Phone: {{i.tel}}<br/>
+                            Web site:{{i.site}}
+                            
+                        </td>
+                    </TR>
+                
+                    {% endfor %}
+                    <tr>
+                        <th colspan="5" class="p2"> CERTIFICAT DE SCOLARITE </th>
+                    </tr>
+                    <tr>
+                    	<td  colspan="5" class="p0"><i> REGISTRATION CERTIFICATE</i> </td>
+					</tr>
+					<tr>
+                    	<td colspan="5" class=""> </td>
+                    </tr>
+                    <tr>
+                    	<td colspan="5" class=""> </td>
+                    </tr>                     
+                
+                    <tr>
+                    	<td colspan="5"><b> Je sousigné,_______________________________________________ </b></td>
+                    </tr>
+                    <tr>
+                    	<td colspan="5" class=""><i>I, the undersigned,</i> </td>
+                    </tr>
+					<tr>
+                    	<td colspan="5" class=""> </td>
+                    </tr> 
+                    {% for i in e %}                   
+                    <tr>
+                    	<td colspan="5" class=""><b>Le {{i.titrechefetablng1}} du {{i.libelleetablng1}}, atteste que:</b> </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" class=""><i>The {{i.titrechefetablng2}} of {{i.libelleetablng2}},certifie that:</i></td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                    	<td colspan="5" class=""> </td>
+                    </tr>
+                    {% for certificat in certificats %} 
+                    <tr>
+                    	<td colspan="5" class=""><b>{{certificat.eleve.civilite}}{{certificat.eleve}}</b></td>
+                    </tr>
+                    <tr>
+                    	<td colspan="5" class=""> </td>
+                    </tr>
+                    <tr>
+                    	<td colspan="5" class=""><b>Date et lieu de naissance:</b> {{certificat.eleve.datenaissel}} à {{certificat.eleve.lieunaiss}}</td>
+                    </tr>
+                    <tr>
+                    	<td colspan="5" class=""><i> Date and place of birth:</i></td>
+                    </tr>
+                    <tr>
+                    	<td colspan="5" class=""> </td>
+                    </tr>
+                    <tr>
+                    	<td colspan="5" class=""><b> Est inscrit dans mon établissement sous le matricule:</b> {{certificat.eleve.matriculeeleve}}</td>
+                    </tr>
+                    <tr>
+                    	<td colspan="5" class=""><i>Is registered under the registration number:</i></td>
+                    </tr>
+                    <tr>
+                    	<td colspan="5" class=""> </td>
+                    </tr>
+                    
+                    <tr>
+                    	<td colspan="5" class=""><b> Année scolaire:</b> {{certificat.anneescolaire}}.</td>
+                    </tr>
+                    <tr>
+                    	<td><i>school  year:</i></td>
+                    </tr>
+					<tr>
+                    	<td colspan="5" class=""> </td>
+                    </tr>
+                    <tr>
+                    	<td><b> Classe: </b>{{certificat.classe}}</td>
+                    </tr>
+                    <tr>
+                    	<td><i>Level:</i></td>
+                    </tr>
+                    <tr>
+                    	<td colspan="5" class=""> </td>
+                    </tr>
+                    <tr>
+                    	<td><b> Série:</b>{{certificat.classe.serie}}</td>
+                    </tr>
+                    <tr>
+                    	<td><i></i></td>
+                    </tr>
+                    <tr>
+                    	<td colspan="5" class=""> </td>
+                    </tr>
+                    <tr>
+                    	<td td colspan="5" class=""><b> {{certificat.etablissement.mentionbaspagecertifscollng1}}</b></td>
+                    </tr>
+                    <tr>
+                    	<td td colspan="5" class=""><i>{{certificat.etablissement.mentionbaspagecertifscollng2}}</i></td>
+                    </tr>
+                    <tr rowspan="3">
+                    	<td colspan="5" class=""><br> </td>
+                    </tr>
+                    <tr rowspan="3">
+                        <td colspan="5" class="">  <br> </td>
+                    </tr>
+    
+                    <tr>
+                    	<td colspan="3" class=""></td>
+                    	<td colspan="2" class=""><b> Fait à {{certificat.etablissement.ville}}, le_________________</b></td>
+                    </tr>
+                    <tr>
+                    	<td colspan="3" class=""></td>
+                    	<td colspan="2" class=""><i>Done in {{certificat.etablissement.ville}}, on</i></td>
+                    </tr>
+                    <tr>
+                    	<td colspan="3" class=""></td>
+                    	<td colspan="2" class=""><b> Le {{certificat.etablissement.titrechefetablng1}}</b></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class=""></td>
+                        <td colspan="2" class=""><i>The {{certificat.etablissement.titrechefetablng2}}</i></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+        </div>
+    </tfoot>
+    </body>
+</html>
